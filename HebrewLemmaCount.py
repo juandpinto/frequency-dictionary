@@ -10,7 +10,7 @@ range_dict = {}
 range_bool = {}
 
 
-# --- FUNCTIONS ---
+# ----- FUNCTIONS -----
 
 
 # Open XML file and read it.
@@ -41,11 +41,20 @@ def sort_frequencies():
         frequency_dict, key=frequency_dict.__getitem__, reverse=True)]
 
 
-# -- MAIN CODE ---
+# ----- MAIN CODE -----
 
 # Define path for topmost directory to search.
-p = Path('../OpenSubtitles2018_parsed/parsed/he')
+p = Path('../OpenSubtitles2018_parsed/parsed/he/0')
 p = list(p.glob('**/*.xml'))
+
+# Create list of corpus file names
+corpus_paths = []
+for i in p:
+    corpus_paths.append(str(i)[38:-4])
+
+# for v in corpus_paths:
+#     print(v)
+
 
 # Run "open_and_read()" and "find_and_count()" functions
 #   for each XML file.
