@@ -36,16 +36,17 @@ dirs.sort()
 # for i in dirs:
 #     print('tt' + i)
 
-print('# ' + year + '\n')
+print('# ' + year + '\n' +
+      'IMDb ID\tTitle\tYear\tLanguage(s)')
 
 
-omdb.set_default('apikey', '906517b3')
+omdb.set_default('apikey', '')
 
 for i in dirs:
-    doc = omdb.imdbid('tt' + i)
-    # if doc['language'] == 'Hebrew':
-    print('ID: tt' + i)
-    print('Title: ' + doc['title'] +
-          '\nYear: ' + doc['year'] +
-          '\tLanguage: ' + doc['language'] +
-          '\n')
+    if i > '0681189':
+        doc = omdb.imdbid('tt' + i)
+        # if doc['language'] == 'Hebrew':
+        print('tt' + i + '\t' +
+              doc['title'] + '\t' +
+              doc['year'] + '\t' +
+              doc['language'])
