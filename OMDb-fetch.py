@@ -8,7 +8,7 @@ import glob
 import omdb
 
 # year = '1996'
-script, year = argv
+script, year, id_start = argv
 
 dirs = []
 p = []
@@ -40,13 +40,21 @@ print('# ' + year + '\n' +
       'IMDb ID\tTitle\tYear\tLanguage(s)')
 
 
-omdb.set_default('apikey', '')
+omdb.set_default('apikey', '906517b3')
 
 for i in dirs:
-    if i > '0681189':
+    if id_start != '':
+        if i > id_start:
+            print('tt' + i + '\t', end="", flush=True)
+            doc = omdb.imdbid('tt' + i)
+            # if doc['language'] == 'Hebrew':
+            print(doc['title'] + '\t' +
+                  doc['year'] + '\t' +
+                  doc['language'])
+    else:
+        print('tt' + i + '\t', end="", flush=True)
         doc = omdb.imdbid('tt' + i)
         # if doc['language'] == 'Hebrew':
-        print('tt' + i + '\t' +
-              doc['title'] + '\t' +
+        print(doc['title'] + '\t' +
               doc['year'] + '\t' +
               doc['language'])
