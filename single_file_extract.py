@@ -3,38 +3,27 @@
 
 import shutil
 import os
-from pathlib import Path
 
-file_dirs = []
+# file_dirs = []
 
-# source = os.listdir("../OpenSubtitles2018_parsed/parsed/he/0")
-# destination = ("../OpenSubtitles2018_parsed_selected")
+source = '../OpenSubtitles2018_parsed'
+destination = './OpenSubtitles2018_parsed_single'
 
-# p = Path('../OpenSubtitles2018_parsed/parsed/he/0')
-# p = list(p.glob('**/*.xml.gz'))
-#
-# print(p)
+# Copy the directory tree into a new location
+shutil.copytree(source, destination, ignore=shutil.ignore_patterns('*.*'))
 
-# shutil.copytree(source, destination)
 
-source = '../OpenSubtitles2018_parsed/parsed/he/0'
-
+# Copy the first file in each folder into the new tree
 for dirName, subdirList, fileList in os.walk(source):
-    print('Directory: %s' % dirName)
-    print(fileList)
-    # for fname in fileList:
-    #     print('\t%s' % fname)
+    for fname in fileList:
+        if fname == '.DS_Store':
+            fileList.remove(fname)
+    if len(fileList) > 0:
+        del fileList[1:]
+        src = dirName + '/' + fileList[0]
+        dst = destination + dirName[27:] + '/'
+        shutil.copy2(src, dst)
+        # print('Source: ' + src + '\n' +
+        #       'Destination: ' + dst)
 
-# for folder in source:
-#     f = 0
-#     # print(folder)
-#     for file in folder:
-#         if file.endswith('.xml.gz'):
-#             print(file)
-#             if f == 0:
-#                 file_dirs.append(file)
-#             f = 1
-    # shutil.copy(files, destination)
-
-# print(type(file_dirs))
-# print(file_dirs)
+print('All single subtitle files successfully copied!')
