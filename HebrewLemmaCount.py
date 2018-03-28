@@ -3,6 +3,7 @@
 
 import re
 from pathlib import Path
+import gzip
 from collections import defaultdict
 
 # Initialize dictionaries
@@ -24,7 +25,7 @@ list_size_int = 5000
 
 # Open XML file and read it.
 def open_and_read(file_loc):
-    with open(file_loc, 'r', encoding='utf-8') as f:
+    with gzip.open(file_loc, 'rt', encoding='utf-8') as f:
         read_data = f.read()
     return read_data
 
@@ -46,8 +47,8 @@ def find_and_count(doc):
 
 
 # Define path for topmost directory to search. (0/374995)
-p = Path('../OpenSubtitles2018_parsed/parsed/he')
-p = list(p.glob('**/*.xml'))
+p = Path('../OpenSubtitles2018_parsed/parsed/he/2014')
+p = list(p.glob('**/*.xml.gz'))
 
 # Run "open_and_read()" and "find_and_count()" functions
 #   for each XML file.
@@ -98,22 +99,22 @@ for k, v in frequency_sorted_list[:list_size_int]:
 
 
 # print(table_list)
-# for i in range(list_size_int):
-#     print('Lemma: ' + table_list[i][0] +
-#           '\tFrequency: ' + str(table_list[i][1]) +
-#           '\tRange: ' + str(table_list[i][2]) +
-#           '\tUDP: ' + str(table_list[i][3]))
+for i in range(list_size_int):
+    print('Lemma: ' + table_list[i][0] +
+          '\tFrequency: ' + str(table_list[i][1]) +
+          '\tRange: ' + str(table_list[i][2]) +
+          '\tUDP: ' + str(table_list[i][3]))
 
 
 # Write final tallies to CSV file
-result = open('HebrewLemmaCount.csv', 'w')
+# result = open('HebrewLemmaCount.csv', 'w')
 # for k, v in frequency_sorted_list:
 #     result.write(str(v) + ', ' + k + ', ' + '\n')
 # result.close()
-result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
-for i in range(list_size_int):
-    result.write(str(table_list[i][0]) + ', ' +
-                 str(table_list[i][1]) + ', ' +
-                 str(table_list[i][2]) + ', ' +
-                 str(table_list[i][3]) + '\n')
-result.close()
+# result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
+# for i in range(list_size_int):
+#     result.write(str(table_list[i][0]) + ', ' +
+#                  str(table_list[i][1]) + ', ' +
+#                  str(table_list[i][2]) + ', ' +
+#                  str(table_list[i][3]) + '\n')
+# result.close()
