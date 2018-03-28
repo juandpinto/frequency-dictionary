@@ -48,7 +48,14 @@ def find_and_count(doc):
 
 # Define path for topmost directory to search. (0/374995)
 p = './OpenSubtitles2018_parsed_single/parsed/he/0'
-# p = list(p.glob('**/*.xml.gz'))
+
+# Create list of IDs for movies with Hebrew as primary language
+Hebrew_IDs_list = []
+with open('./Hebrew_originals.txt', 'r', encoding='utf-8') as f:
+    read_data = f.read()
+    Hebrew_IDs_list = re.findall(r'\s\stt[0-9]+\t', read_data)
+Hebrew_IDs_list = [line[4:-1] for line in Hebrew_IDs_list]
+print(Hebrew_IDs_list)
 
 # Run "open_and_read()" and "find_and_count()" functions
 #   for each XML file.

@@ -1,0 +1,156 @@
+Results for "\tHebrew" in "OPUS-Lemmas/movies-info"
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/1980s.tsv:
+  61:  tt0082528	Hot Bubblegum	1981	Hebrew
+  167:  tt0084629	Private Popsicle	1982	Hebrew
+  233:  tt0085541	B'Hinat Bagrut	1983	Hebrew
+  361:  tt0087699	Beyond the Walls	1984	Hebrew
+  363:  tt0086926	Baby Love	1983	Hebrew
+  418:  tt0133399	Banot	1985	Hebrew
+  472:  tt0089571	The Lover	1985	Hebrew, English
+  559:  tt0133351	Alex Is Lovesick	1986	Hebrew, Polish
+  738:  tt0133600	Bouba	1987	Hebrew
+  1002:  tt0133714	Doar Tz'vaee Hof Eilat	1989	Hebrew
+  1028:  tt0144591	Sadot Yerukim	1989	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/1990s.tsv:
+  902:  tt0103945	Life According to Agfa	1992	Hebrew
+  1110:  tt0143941	Tipat Mazal	1992	Hebrew, Arabic, Yiddish, French, Romanian
+  1702:  tt0116843	Layla Lavan	1996	Hebrew
+  2544:  tt0163595	Dangerous Acts	1998	Hebrew
+  2947:  tt0162909	Yana's Friends	1999	Hebrew, Russian, English
+  2997:  tt0189630	Kadosh	1999	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2000.tsv:
+  162:  tt0218379	Kippur	2000	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2001.tsv:
+  242:  tt0306310	Dakot Shel Tehila	2001–	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2002.tsv:
+  266:  tt0317842	Broken Wings	2002	Hebrew
+  296:  tt0340013	Beitar Provence	2002	Hebrew
+  314:  tt0392613	Pituy	2002	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2003.tsv:
+  11:  tt0238960	Rutenberg	2003	Hebrew, English, Russian
+  82:  tt0305178	James' Journey to Jerusalem	2003	Hebrew, English, Zulu
+  209:  tt0330889	Sima Vaknin Machshefa	2003	Hebrew, Russian
+  257:  tt0342535	Wisdom of the Pretzel	2002	Hebrew
+  287:  tt0359700	Miss Entebbe	2003	Hebrew
+  330:  tt0376007	Nina's Tragedies	2003	Hebrew
+  344:  tt0380485	Bonjour Monsieur Shlomi	2003	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2004.tsv:
+  148:  tt0358925	Colombian Love	2004	Hebrew, Spanish, English
+  231:  tt0374036	Campfire	2004	Hebrew, English
+  232:  tt0374279	Turn Left at the End of the World	2004	Hebrew, English, French
+  388:  tt0426155	Ushpizin	2004	Hebrew, Yiddish
+  390:  tt0426260	Delayed Reaction	2004	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2005.tsv:
+  124:  tt0383066	La última luna	2005	Hebrew, Turkish, Arabic
+  156:  tt0388505	Live and Become	2005	Hebrew, French, Amharic
+  393:  tt0446453	Riki Riki	2005	Hebrew
+  472:  tt0480940	Schwartz Dynasty	2005	Hebrew, Russian, Yiddish
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2006.tsv:
+  375:  tt0476546	Little Heroes	2006	Hebrew
+  376:  tt0476643	The Bubble	2006	Hebrew, Arabic, English
+  471:  tt0498846	Sweet Mud	2006	Hebrew, French, English
+  819:  tt0759604	Out of Sight	2006	Hebrew
+  1271:  tt0814197	Love & Dance	2006	Hebrew
+  1276:  tt0815016	Corn Snake	2006	Hebrew, English
+  1332:  tt0823134	Last Tango in Agrestic	2006	Hebrew
+  1334:  tt0823136	A.K.A The Plant	2006	Hebrew, English
+  1337:  tt0823493	Dear Mr. Waldman	2006	Hebrew
+  1410:  tt0833438	Dead End	2006	Hebrew
+  1418:  tt0834955	Someone to Run With	2006	Hebrew
+  1941:  tt1090316	Foul Gesture	2006	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2007.tsv:
+  223:  tt0498793	She's Got It	2007	Hebrew
+  235:  tt0758732	Beaufort	2007	Hebrew
+  279:  tt0782867	The Secrets	2007	Hebrew, French, English
+  298:  tt0791140	Only Dogs Run Free	2007	Hebrew
+  334:  tt0807721	Meduzot	2007	Hebrew, English, Tagalog, German
+  356:  tt0818170	The Little Traitor	2007	Hebrew, English
+  524:  tt0892332	Noodle	2007	Hebrew, Mandarin
+  1107:  tt0990427	The Debt	2007	Hebrew, German
+  1525:  tt1032856	The Band's Visit	2007	Hebrew, Arabic, English
+  1806:  tt1093814	Children of the Sun	2007	Hebrew
+  2051:  tt1213858	Flipping Out	2007	Hebrew, English
+  2081:  tt2539474	Sof Shavua be-Galil	2007	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2008.tsv:
+  936:  tt1185616	Waltz with Bashir	2008	Hebrew, Arabic, German, English
+  1142:  tt1210351	Lost Islands	2008	Hebrew
+  1783:  tt1284990	It All Begins at Sea	2008	Hebrew
+  1932:  tt1320376	Eli & Ben	2008	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2009.tsv:
+  443:  tt1198153	The Assassin Next Door	2009	Hebrew, Russian, English
+  740:  tt1258123	A Matter of Size	2009	Hebrew, English, Japanese
+  1117:  tt1345469	Five Hours from Paris	2009	Hebrew, Russian
+  1813:  tt1455618	The Loners	2009	Hebrew, Russian
+  1994:  tt1483831	Lebanon	2009	Hebrew, Arabic, French, English
+  2084:  tt1494810	Phobidilia	2009	Hebrew, English
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2010.tsv:
+  34:  tt0887751	Honor	2010	Hebrew
+  209:  tt1311075	The Human Resources Manager	2010	Hebrew, English, Romanian, French
+  415:  tt1483826	Haiu Leilot	2010	Hebrew
+  1907:  tt1655424	The Matchmaker	2010	Hebrew
+  1943:  tt1664065	Asfur	2010–	Hebrew
+  1967:  tt1666165	Naomi	2010	Hebrew, Arabic, Russian
+  2520:  tt1754000	Rabies	2010	Hebrew
+  2620:  tt1922662	Maya	2010	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2011.tsv:
+  157:  tt1445520	Footnote	2011	Hebrew
+  1151:  tt1784499	Valley of the Wolves: Palestine	2011	Hebrew, Turkish, Arabic
+  1165:  tt1787663	Restoration	2011	Hebrew
+  1369:  tt1820531	Melting Away	2011	Hebrew
+  1754:  tt1893261	Invisible	2011	Hebrew
+  1986:  tt1964485	Anachnu Lo Levad	2011	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2012.tsv:
+  1491:  tt2219514	Fill the Void	2012	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2013.tsv:
+  559:  tt2309224	Big Bad Wolves	2013	Hebrew, Arabic
+  2168:  tt2915160	Bethlehem	2013	Hebrew, Arabic
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/2014.tsv:
+  585:  tt3062880	Gett: The Trial of Viviane Amsalem	2014	Hebrew, French, Arabic
+  1878:  tt3576084	Zero Motivation	2014	Hebrew
+
+
+/Users/JDPinto/Documents/Thesis_Data/OPUS-Lemmas/movies-info/to-1979.tsv:
+  676:  tt0065076	Te'alat Blaumilch	1969	Hebrew, German
+  715:  tt0138101	The Flying Matchmaker	1966	Hebrew
+  736:  tt0066374	The Policeman	1971	Hebrew
+  843:  tt0069771	The House on Chelouche Street	1973	Hebrew
+  868:  tt0133689	Charlie Ve'hetzi	1974	Hebrew
+  875:  tt0071715	Kazablan	1973	Hebrew
+  956:  tt0152492	Hagiga B'Snuker	1975	Hebrew
+  1002:  tt0073052	Halfon Hill Doesn't Answer	1976	Hebrew
+  1082:  tt0079118	Lemon Popsicle	1978	Hebrew
+  1083:  tt0078261	Ha-Shu'al B'Lool Hatarnagalot	1978	Hebrew
+  1133:  tt0079218	Going Steady	1979	Hebrew, Polish
