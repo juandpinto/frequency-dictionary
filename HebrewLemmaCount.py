@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from pathlib import Path
+import os
 import gzip
 from collections import defaultdict
 
@@ -47,13 +47,15 @@ def find_and_count(doc):
 
 
 # Define path for topmost directory to search. (0/374995)
-p = Path('../OpenSubtitles2018_parsed/parsed/he/2014')
-p = list(p.glob('**/*.xml.gz'))
+p = './OpenSubtitles2018_parsed_single/parsed/he/0'
+# p = list(p.glob('**/*.xml.gz'))
 
 # Run "open_and_read()" and "find_and_count()" functions
 #   for each XML file.
-for f in p:
-    find_and_count(open_and_read(f))
+for dirName, subdirList, fileList in os.walk(p):
+    if len(fileList) > 0:
+        f = dirName + '/' + fileList[0]
+        find_and_count(open_and_read(f))
 
 # Calculate token count per corpus
 for lemma in lemma_by_corpus_dict:
