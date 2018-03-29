@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from pathlib import Path
+import os
 import gzip
 from collections import defaultdict
 
@@ -17,10 +17,10 @@ total_tokens_int = 0
 table_list = []
 
 # Identify size of list
-list_size_int = 5000
+list_size_int = 3000
 
 
-# ----- FUNCTIONS -----
+# ------------ FUNCTIONS ------------
 
 
 # Open XML file and read it.
@@ -43,17 +43,43 @@ def find_and_count(doc):
             lemma_by_corpus_dict[word[7:-1]][corpus] = 1
 
 
-# ----- MAIN CODE -----
+# ------------ OPEN AND READ ------------
 
 
 # Define path for topmost directory to search. (0/374995)
-p = Path('../OpenSubtitles2018_parsed/parsed/he/2014')
-p = list(p.glob('**/*.xml.gz'))
+p = './OpenSubtitles2018_parsed_single/parsed/he'
 
-# Run "open_and_read()" and "find_and_count()" functions
-#   for each XML file.
-for f in p:
-    find_and_count(open_and_read(f))
+# Create list of IDs for movies with Hebrew as primary language
+# Hebrew_IDs_list = []
+# with open('./Hebrew_originals.txt', 'r', encoding='utf-8') as f:
+#     read_data = f.read()
+#     Hebrew_IDs_list = re.findall(r'\s\stt[0-9]+\t', read_data)
+# Hebrew_IDs_list = [line[4:-1] for line in Hebrew_IDs_list]
+#
+# # Delete extra 0s at the beginning of Hebrew movie IDs
+# for item in Hebrew_IDs_list:
+#     if item[0] == '0':
+#         Hebrew_IDs_list[Hebrew_IDs_list.index(item)] = item[1:]
+# for item in Hebrew_IDs_list:
+#     if item[0] == '0':
+#         Hebrew_IDs_list[Hebrew_IDs_list.index(item)] = item[1:]
+
+# Count lemmas for movies with Hebrew as primary language
+# for dirName, subdirList, fileList in os.walk(p):
+#     if len(fileList) > 0:
+#         f = dirName + '/' + fileList[0]
+#         folders = re.split('/', dirName)
+#         if folders[len(folders)-1] in Hebrew_IDs_list:
+#             find_and_count(open_and_read(f))
+
+# Count lemmas for all movies
+for dirName, subdirList, fileList in os.walk(p):
+    if len(fileList) > 0:
+        f = dirName + '/' + fileList[0]
+        find_and_count(open_and_read(f))
+
+# ------------ CALCULATIONS ------------
+
 
 # Calculate token count per corpus
 for lemma in lemma_by_corpus_dict:
@@ -88,6 +114,9 @@ lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in lemma_DPs_dict.items()}
 lemma_UDPs_dict = {lemma: 1-DP for (lemma, DP) in lemma_DPs_dict.items()}
 
 
+# ------------ CREATE TABLE ------------
+
+
 # Create list of tuples with all values
 # Lemma, Frequency, Range, DP
 # table_list = [(k, v, sum(lemma_by_corpus_dict[k].values()))
@@ -99,22 +128,22 @@ for k, v in frequency_sorted_list[:list_size_int]:
 
 
 # print(table_list)
-for i in range(list_size_int):
-    print('Lemma: ' + table_list[i][0] +
-          '\tFrequency: ' + str(table_list[i][1]) +
-          '\tRange: ' + str(table_list[i][2]) +
-          '\tUDP: ' + str(table_list[i][3]))
+# for i in range(list_size_int):
+#     print('Lemma: ' + table_list[i][0] +
+#           '\tFrequency: ' + str(table_list[i][1]) +
+#           '\tRange: ' + str(table_list[i][2]) +
+#           '\tUDP: ' + str(table_list[i][3]))
 
 
 # Write final tallies to CSV file
-# result = open('HebrewLemmaCount.csv', 'w')
+result = open('./export/HebrewWordList.csv', 'w')
 # for k, v in frequency_sorted_list:
 #     result.write(str(v) + ', ' + k + ', ' + '\n')
 # result.close()
-# result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
-# for i in range(list_size_int):
-#     result.write(str(table_list[i][0]) + ', ' +
-#                  str(table_list[i][1]) + ', ' +
-#                  str(table_list[i][2]) + ', ' +
-#                  str(table_list[i][3]) + '\n')
-# result.close()
+result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
+for i in range(list_size_int):
+    result.write(str(table_list[i][0]) + ', ' +
+                 str(table_list[i][1]) + ', ' +
+                 str(table_list[i][2]) + ', ' +
+                 str(table_list[i][3]) + '\n')
+result.close()
