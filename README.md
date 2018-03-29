@@ -2,7 +2,7 @@
 
 This repository is part of an ongoing project to create a frequency list of Hebrew words from OPUS's [OpenSubtitles2018] collection, which is a mega-corpus of cleaned, tokenized, and parsed versions of XML files originally obtained from [opensubtitles.org]. My word list consists of Hebrew lemmas, and is arranged based on a combination of raw frequency, range, and dispersion.
 
-- Latest version of my word list: [HebrewLemmaCount.csv](HebrewLemmaCount.csv)
+- Latest version of my word lists: [export/](export/)
 - Latest version of my main script: [HebrewLemmaCount.py](HebrewLemmaCount.py)
 
 
