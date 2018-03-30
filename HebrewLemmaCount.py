@@ -26,7 +26,7 @@ total_tokens_int = 0
 table_list = []
 
 # Set size of final list
-list_size_int = 3000
+list_size_int = 7000
 
 
 ############################################################
@@ -149,18 +149,6 @@ UDP_sorted_list = [(k, lemma_UDPs_dict[k]) for k in sorted(
     lemma_UDPs_dict, key=lemma_UDPs_dict.__getitem__,
     reverse=True)]
 
-# Calculate list size for 90% coverage and set that as the list size
-added_freq_int = 0
-count = 0
-for k, v in UDP_sorted_list:
-    print(v, added_freq_int, count)
-    if added_freq_int / total_tokens_int < 0.9:
-        added_freq_int = added_freq_int + v
-        count = count + 1
-    else:
-        break
-list_size_int = count
-
 # Create list of tuples with all values (Lemma, Frequency, Range, UDP)
 for k, v in UDP_sorted_list[:list_size_int]:
     table_list.append((k, lemma_totals_dict[k], sum(
@@ -193,8 +181,50 @@ for k, v in UDP_sorted_list[:list_size_int]:
 # ------------- END OF SORT-BY-FREQUENCY BLOCK -------------
 ############################################################
 
+# Calculate list size for 90% coverage and set that as the list size. Note
+# that if the initial list_size_int (set near the beginning of the script)
+# provides less than the desired coverage, it will default to that instead.
+#
+added_freq_int = 0
+count = 0
+per90 = 0
+per80 = 0
+per70 = 0
+for k, v in UDP_sorted_list:
+    if added_freq_int / total_tokens_int < 0.4:
+        print(lemma_totals_dict[k], added_freq_int, k, count)
+    if added_freq_int / total_tokens_int < 0.95:
+        added_freq_int = added_freq_int + lemma_totals_dict[k]
+        count = count + 1
+        if added_freq_int / total_tokens_int >= 0.7:
+            if per70 == 0:
+                print('**70 coverage**')
+                print(count)
+                print(added_freq_int)
+                per70 = 1
+            if added_freq_int / total_tokens_int >= 0.8:
+                if per80 == 0:
+                    print('**80 coverage**')
+                    print(count)
+                    print(added_freq_int)
+                    per80 = 1
+                if added_freq_int / total_tokens_int >= 0.9:
+                    if per90 == 0:
+                        print('**90 coverage**')
+                        print(count)
+                        print(added_freq_int)
+                        per90 = 1
+    else:
+        break
+list_size_int = count
+print('Break:')
+print(count)
+print(list_size_int)
+print(added_freq_int)
+print(total_tokens_int)
+
 # Write final tallies to CSV file
-result = open('./export/HebrewWordList.csv', 'w')
+result = open('./export/HebrewWordList2.csv', 'w')
 result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
 for i in range(list_size_int):
     result.write(str(table_list[i][0]) + ', ' +
@@ -206,7 +236,7 @@ result.close()
 # Print final tallies. Uncomment this code to see the results
 # printed instead of writing them to a file.
 #
-# for i in range(len(table_list)):
+# for i in range(list_size_int):
 #     print('Lemma: ' + table_list[i][0] +
 #           '\tFrequency: ' + str(table_list[i][1]) +
 #           '\tRange: ' + str(table_list[i][2]) +
