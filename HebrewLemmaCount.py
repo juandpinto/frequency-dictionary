@@ -47,7 +47,7 @@ def find_and_count(doc):
 
 
 # Define path for topmost directory to search. (0/374995)
-p = './OpenSubtitles2018_parsed_single/parsed/he'
+p = './OpenSubtitles2018_parsed_single/parsed/he/0'
 
 # Create list of IDs for movies with Hebrew as primary language
 # Hebrew_IDs_list = []
@@ -114,36 +114,51 @@ lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in lemma_DPs_dict.items()}
 lemma_UDPs_dict = {lemma: 1-DP for (lemma, DP) in lemma_DPs_dict.items()}
 
 
+# Calculate list size for 70% coverage
+added_freq_int = 0
+count = 0
+for k, v in frequency_sorted_list:
+    print(v, added_freq_int, count)
+    if added_freq_int / total_tokens_int < 0.7:
+        added_freq_int = added_freq_int + v
+        count = count + 1
+    else:
+        break
+print(count)
+print(added_freq_int)
+print(total_tokens_int)
+print(added_freq_int / total_tokens_int)
+
 # ------------ CREATE TABLE ------------
 
-
-# Create list of tuples with all values
-# Lemma, Frequency, Range, DP
-# table_list = [(k, v, sum(lemma_by_corpus_dict[k].values()))
-#     for k, v in frequency_sorted_list[:20]]
-for k, v in frequency_sorted_list[:list_size_int]:
-    table_list.append((k, v, sum(
-        1 for count in lemma_by_corpus_dict[k].values() if count > 0),
-        lemma_UDPs_dict[k]))
-
-
-# print(table_list)
+#
+# # Create list of tuples with all values
+# # Lemma, Frequency, Range, DP
+# # table_list = [(k, v, sum(lemma_by_corpus_dict[k].values()))
+# #     for k, v in frequency_sorted_list[:20]]
+# for k, v in frequency_sorted_list[:list_size_int]:
+#     table_list.append((k, v, sum(
+#         1 for count in lemma_by_corpus_dict[k].values() if count > 0),
+#         lemma_UDPs_dict[k]))
+#
+#
+# # print(table_list)
+# # for i in range(list_size_int):
+# #     print('Lemma: ' + table_list[i][0] +
+# #           '\tFrequency: ' + str(table_list[i][1]) +
+# #           '\tRange: ' + str(table_list[i][2]) +
+# #           '\tUDP: ' + str(table_list[i][3]))
+#
+#
+# # Write final tallies to CSV file
+# result = open('./export/HebrewWordList.csv', 'w')
+# # for k, v in frequency_sorted_list:
+# #     result.write(str(v) + ', ' + k + ', ' + '\n')
+# # result.close()
+# result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
 # for i in range(list_size_int):
-#     print('Lemma: ' + table_list[i][0] +
-#           '\tFrequency: ' + str(table_list[i][1]) +
-#           '\tRange: ' + str(table_list[i][2]) +
-#           '\tUDP: ' + str(table_list[i][3]))
-
-
-# Write final tallies to CSV file
-result = open('./export/HebrewWordList.csv', 'w')
-# for k, v in frequency_sorted_list:
-#     result.write(str(v) + ', ' + k + ', ' + '\n')
+#     result.write(str(table_list[i][0]) + ', ' +
+#                  str(table_list[i][1]) + ', ' +
+#                  str(table_list[i][2]) + ', ' +
+#                  str(table_list[i][3]) + '\n')
 # result.close()
-result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
-for i in range(list_size_int):
-    result.write(str(table_list[i][0]) + ', ' +
-                 str(table_list[i][1]) + ', ' +
-                 str(table_list[i][2]) + ', ' +
-                 str(table_list[i][3]) + '\n')
-result.close()
