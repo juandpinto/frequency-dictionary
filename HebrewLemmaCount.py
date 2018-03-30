@@ -149,6 +149,18 @@ UDP_sorted_list = [(k, lemma_UDPs_dict[k]) for k in sorted(
     lemma_UDPs_dict, key=lemma_UDPs_dict.__getitem__,
     reverse=True)]
 
+# Calculate list size for 90% coverage and set that as the list size
+added_freq_int = 0
+count = 0
+for k, v in UDP_sorted_list:
+    print(v, added_freq_int, count)
+    if added_freq_int / total_tokens_int < 0.9:
+        added_freq_int = added_freq_int + v
+        count = count + 1
+    else:
+        break
+list_size_int = count
+
 # Create list of tuples with all values (Lemma, Frequency, Range, UDP)
 for k, v in UDP_sorted_list[:list_size_int]:
     table_list.append((k, lemma_totals_dict[k], sum(
