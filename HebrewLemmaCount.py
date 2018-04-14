@@ -13,10 +13,10 @@ from collections import defaultdict
 
 # Define path for topmost directory to search. Make sure this points to
 # the correct location of your corpus.
-corpus_path = './OpenSubtitles2018_parsed_single'
+corpus_path = './OpenSubtitles2018_parsed_single/parsed/he'
 
 # Initialize dictionaries
-lemma_by_corpus_dict = {}
+lemma_by_file_dict = {}
 lemma_totals_dict = {}
 token_count_dict = {}
 lemma_DPs_dict = defaultdict(float)
@@ -41,17 +41,17 @@ def open_and_read(file_loc):
     return read_data
 
 
-# Search for lemma and add counts to "frequency{}".
+# Search for lemmas and add counts to "lemma_by_file_dict{}".
 def find_and_count(doc):
-    corpus = str(f)[38:-4]
+    file = str(f)[40:-3]
     match_pattern = re.findall(r'lemma="[א-ת]+"', doc)
     for word in match_pattern:
-        if word[7:-1] in lemma_by_corpus_dict:
-            count = lemma_by_corpus_dict[word[7:-1]].get(corpus, 0)
-            lemma_by_corpus_dict[word[7:-1]][corpus] = count + 1
+        if word[7:-1] in lemma_by_file_dict:
+            count = lemma_by_file_dict[word[7:-1]].get(file, 0)
+            lemma_by_file_dict[word[7:-1]][file] = count + 1
         else:
-            lemma_by_corpus_dict[word[7:-1]] = {}
-            lemma_by_corpus_dict[word[7:-1]][corpus] = 1
+            lemma_by_file_dict[word[7:-1]] = {}
+            lemma_by_file_dict[word[7:-1]][file] = 1
 
 
 ############################################################
@@ -112,27 +112,27 @@ for dirName, subdirList, fileList in os.walk(corpus_path):
 # --------------------- CALCULATIONS --------------------- #
 ############################################################
 
-# Calculate token count per corpus
-for lemma in lemma_by_corpus_dict:
-    for corpus in lemma_by_corpus_dict[lemma]:
-        token_count_dict[corpus] = token_count_dict.get(
-            corpus, 0) + lemma_by_corpus_dict[lemma][corpus]
-
 # Calculate total frequencies per lemma
-for lemma in lemma_by_corpus_dict:
-    lemma_totals_dict[lemma] = sum(lemma_by_corpus_dict[lemma].values())
+for lemma in lemma_by_file_dict:
+    lemma_totals_dict[lemma] = sum(lemma_by_file_dict[lemma].values())
+
+# Calculate token count per file
+for lemma in lemma_by_file_dict:
+    for file in lemma_by_file_dict[lemma]:
+        token_count_dict[file] = token_count_dict.get(
+            file, 0) + lemma_by_file_dict[lemma][file]
 
 # Calculate total token count
-for corpus in token_count_dict:
-    total_tokens_int = total_tokens_int + token_count_dict.get(corpus, 0)
+for file in token_count_dict:
+    total_tokens_int = total_tokens_int + token_count_dict.get(file, 0)
 
 # Calculate DPs
-for lemma in lemma_by_corpus_dict.keys():
-    for corpus in lemma_by_corpus_dict[lemma].keys():
+for lemma in lemma_by_file_dict.keys():
+    for file in lemma_by_file_dict[lemma].keys():
         lemma_DPs_dict[lemma] = lemma_DPs_dict[lemma] + abs(
-            (token_count_dict[corpus] /
+            (token_count_dict[file] /
              total_tokens_int) -
-            (lemma_by_corpus_dict[lemma][corpus] /
+            (lemma_by_file_dict[lemma][file] /
              lemma_totals_dict[lemma]))
 lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in lemma_DPs_dict.items()}
 
@@ -149,11 +149,15 @@ UDP_sorted_list = [(k, lemma_UDPs_dict[k]) for k in sorted(
     lemma_UDPs_dict, key=lemma_UDPs_dict.__getitem__,
     reverse=True)]
 
+# Set value by which to measure frequency (freq per x words)
+freq_per_int = 1000000
+
 # Create list of tuples with all values (Lemma, Frequency, Range, UDP)
 for k, v in UDP_sorted_list[:list_size_int]:
-    table_list.append((k, lemma_totals_dict[k], sum(
-        1 for count in lemma_by_corpus_dict[k].values() if count > 0),
-        v))
+    table_list.append((k, round(lemma_totals_dict[k] / total_tokens_int *
+                      freq_per_int, 2), sum(1 for count in
+                      lemma_by_file_dict[k].values() if count > 0),
+                      round(v, 5)))
 
 ############################################################
 # ---------------- SORT-BY-FREQUENCY BLOCK -----------------
@@ -175,7 +179,7 @@ for k, v in UDP_sorted_list[:list_size_int]:
 #
 # for k, v in frequency_sorted_list[:list_size_int]:
 #     table_list.append((k, v, sum(
-#         1 for count in lemma_by_corpus_dict[k].values() if count > 0),
+#         1 for count in lemma_by_file_dict[k].values() if count > 0),
 #         lemma_UDPs_dict[k]))
 #
 # ------------- END OF SORT-BY-FREQUENCY BLOCK -------------
@@ -196,7 +200,7 @@ for k, v in UDP_sorted_list[:list_size_int]:
 # list_size_int = count
 
 # Write final tallies to CSV file
-result = open('./export/HebrewWordList2.csv', 'w')
+result = open('./export/WordList.csv', 'w')
 result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
 for i in range(list_size_int):
     result.write(str(table_list[i][0]) + ', ' +

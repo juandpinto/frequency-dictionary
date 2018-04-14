@@ -4,14 +4,11 @@
 import shutil
 import os
 
-# file_dirs = []
-
 source = '../OpenSubtitles2018_parsed'
 destination = './OpenSubtitles2018_parsed_single'
 
 # Copy the directory tree into a new location
 shutil.copytree(source, destination, ignore=shutil.ignore_patterns('*.*'))
-
 
 # Copy the first file in each folder into the new tree
 for dirName, subdirList, fileList in os.walk(source):
@@ -23,7 +20,3 @@ for dirName, subdirList, fileList in os.walk(source):
         src = dirName + '/' + fileList[0]
         dst = destination + dirName[27:] + '/'
         shutil.copy2(src, dst)
-        # print('Source: ' + src + '\n' +
-        #       'Destination: ' + dst)
-
-print('All single subtitle files successfully copied!')
