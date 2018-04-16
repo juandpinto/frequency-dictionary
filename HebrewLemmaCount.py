@@ -137,7 +137,8 @@ for lemma in lemma_by_file_dict.keys():
 lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in lemma_DPs_dict.items()}
 
 # Calculate UDPs
-lemma_UDPs_dict = {lemma: 1-DP for (lemma, DP) in lemma_DPs_dict.items()}
+lemma_UDPs_dict = {lemma: (1-DP)*lemma_totals_dict[lemma] for (lemma, DP) in
+                   lemma_DPs_dict.items()}
 
 
 ############################################################
@@ -154,10 +155,10 @@ freq_per_int = 1000000
 
 # Create list of tuples with all values (Lemma, Frequency, Range, UDP)
 for k, v in UDP_sorted_list[:list_size_int]:
-    table_list.append((k, round(lemma_totals_dict[k] / total_tokens_int *
-                      freq_per_int, 2), sum(1 for count in
+    table_list.append((k, '{0:,.2f}'.format(lemma_totals_dict[k] /
+                      total_tokens_int * freq_per_int), sum(1 for count in
                       lemma_by_file_dict[k].values() if count > 0),
-                      round(v, 5)))
+                      '{0:,.2f}'.format(v)))
 
 ############################################################
 # ---------------- SORT-BY-FREQUENCY BLOCK -----------------
@@ -200,12 +201,12 @@ for k, v in UDP_sorted_list[:list_size_int]:
 # list_size_int = count
 
 # Write final tallies to CSV file
-result = open('./export/WordList.csv', 'w')
-result.write('LEMMA, FREQUENCY, RANGE, UDP\n')
+result = open('./export/WordList.tsv', 'w')
+result.write('LEMMA\tFREQUENCY\tRANGE\tUDP\n')
 for i in range(list_size_int):
-    result.write(str(table_list[i][0]) + ', ' +
-                 str(table_list[i][1]) + ', ' +
-                 str(table_list[i][2]) + ', ' +
+    result.write(str(table_list[i][0]) + '\t' +
+                 str(table_list[i][1]) + '\t' +
+                 str(table_list[i][2]) + '\t' +
                  str(table_list[i][3]) + '\n')
 result.close()
 
