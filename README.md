@@ -1,9 +1,9 @@
-# OPUS-Lemmas
+# OPUS-Frequencies
 
 This repository is part of an ongoing project to create a frequency list of Hebrew words from OPUS's [OpenSubtitles2018] collection, which is a mega-corpus of cleaned, tokenized, and parsed versions of XML files originally obtained from [opensubtitles.org]. My word list consists of Hebrew lemmas, and is arranged based on a combination of raw frequency, range, and dispersion.
 
 - Latest version of my word lists: [export/](export/)
-- Latest version of my main script: [HebrewLemmaCount.py](HebrewLemmaCount.py)
+- Latest version of my main script: [create-word-list.py](create-word-list.py)
 
 
 This repo also includes a script to extract information on all movies in the corpus: the IMDB ID, title, year, and original language. The script uses [Derrick Gilland]'s [omdb.py library], which is a Python wrapper around the [OMDb API (Open Movie Database API)]. OMDb is, in turn, a project that makes use of [IMDb (Internet Movie Database)] for its data.
