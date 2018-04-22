@@ -18,6 +18,7 @@ corpus_path = './OpenSubtitles2018_parsed_single/parsed/he'
 # Initialize dictionaries
 lemma_by_file_dict = {}
 lemma_totals_dict = {}
+lemma_norm_dict = {}
 token_count_dict = {}
 lemma_DPs_dict = defaultdict(float)
 lemma_UDPs_dict = defaultdict(float)
@@ -112,7 +113,7 @@ for dirName, subdirList, fileList in os.walk(corpus_path):
 # --------------------- CALCULATIONS --------------------- #
 ############################################################
 
-# Calculate total frequencies per lemma
+# Calculate total raw frequencies per lemma
 for lemma in lemma_by_file_dict:
     lemma_totals_dict[lemma] = sum(lemma_by_file_dict[lemma].values())
 
@@ -126,6 +127,14 @@ for lemma in lemma_by_file_dict:
 for file in token_count_dict:
     total_tokens_int = total_tokens_int + token_count_dict.get(file, 0)
 
+# Set value by which to measure normalized frequency (freq per x words)
+freq_per_int = 1000000
+
+# Calculate normalized frequencies per lemma
+for lemma in lemma_totals_dict:
+    lemma_norm_dict[lemma] = lemma_totals_dict[lemma] / total_tokens_int * \
+        freq_per_int
+
 # Calculate DPs
 for lemma in lemma_by_file_dict.keys():
     for file in lemma_by_file_dict[lemma].keys():
@@ -137,7 +146,7 @@ for lemma in lemma_by_file_dict.keys():
 lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in lemma_DPs_dict.items()}
 
 # Calculate UDPs
-lemma_UDPs_dict = {lemma: (1-DP)*lemma_totals_dict[lemma] for (lemma, DP) in
+lemma_UDPs_dict = {lemma: (1-DP)*lemma_norm_dict[lemma] for (lemma, DP) in
                    lemma_DPs_dict.items()}
 
 
@@ -150,15 +159,16 @@ UDP_sorted_list = [(k, lemma_UDPs_dict[k]) for k in sorted(
     lemma_UDPs_dict, key=lemma_UDPs_dict.__getitem__,
     reverse=True)]
 
-# Set value by which to measure frequency (freq per x words)
-freq_per_int = 1000000
-
-# Create list of tuples with all values (Lemma, Frequency, Range, UDP)
+# Create list of tuples with all values (Lemma, Rank, UDP, Frequency, Range)
+i = 0
 for k, v in UDP_sorted_list[:list_size_int]:
-    table_list.append((k, '{0:,.2f}'.format(lemma_totals_dict[k] /
-                      total_tokens_int * freq_per_int), sum(1 for count in
-                      lemma_by_file_dict[k].values() if count > 0),
-                      '{0:,.2f}'.format(v)))
+    i = i + 1
+    table_list.append((k,
+                       i,
+                       '{0:,.2f}'.format(v),
+                       '{0:,.2f}'.format(lemma_norm_dict[k]),
+                       sum(1 for count in lemma_by_file_dict[k].values() if
+                           count > 0)))
 
 ############################################################
 # ---------------- SORT-BY-FREQUENCY BLOCK -----------------
@@ -201,13 +211,14 @@ for k, v in UDP_sorted_list[:list_size_int]:
 # list_size_int = count
 
 # Write final tallies to CSV file
-result = open('./export/WordList.tsv', 'w')
-result.write('LEMMA\tFREQUENCY\tRANGE\tUDP\n')
+result = open('./export/WordList2.tsv', 'w')
+result.write('LEMMA\tRANK\tDISPERSION\tFREQUENCY\tRANGE\n')
 for i in range(list_size_int):
     result.write(str(table_list[i][0]) + '\t' +
                  str(table_list[i][1]) + '\t' +
                  str(table_list[i][2]) + '\t' +
-                 str(table_list[i][3]) + '\n')
+                 str(table_list[i][3]) + '\t' +
+                 str(table_list[i][4]) + '\n')
 result.close()
 
 # Print final tallies. Uncomment this code to see the results
