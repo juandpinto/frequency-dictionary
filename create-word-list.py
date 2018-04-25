@@ -24,6 +24,7 @@ lemma_DPs_dict = defaultdict(float)
 lemma_UDPs_dict = defaultdict(float)
 
 total_tokens_int = 0
+total_files_int = 0
 table_list = []
 
 # Set size of final list
@@ -64,6 +65,7 @@ def find_and_count(doc):
 #
 for dirName, subdirList, fileList in os.walk(corpus_path):
     if len(fileList) > 0:
+        total_files_int = total_files_int + 1
         f = dirName + '/' + fileList[0]
         find_and_count(open_and_read(f))
 
@@ -167,8 +169,10 @@ for k, v in UDP_sorted_list[:list_size_int]:
                        i,
                        '{0:,.2f}'.format(v),
                        '{0:,.2f}'.format(lemma_norm_dict[k]),
-                       sum(1 for count in lemma_by_file_dict[k].values() if
-                           count > 0)))
+                       '{0:,.2f}'.format(sum(1 for count in
+                                             lemma_by_file_dict[k].values() if
+                                             count > 0) /
+                                         total_files_int * 100)))
 
 ############################################################
 # ---------------- SORT-BY-FREQUENCY BLOCK -----------------
@@ -211,7 +215,7 @@ for k, v in UDP_sorted_list[:list_size_int]:
 # list_size_int = count
 
 # Write final tallies to CSV file
-result = open('./export/WordList2.tsv', 'w')
+result = open('./export/word-list.tsv', 'w')
 result.write('LEMMA\tRANK\tDISPERSION\tFREQUENCY\tRANGE\n')
 for i in range(list_size_int):
     result.write(str(table_list[i][0]) + '\t' +
