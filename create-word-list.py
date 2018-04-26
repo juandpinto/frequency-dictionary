@@ -214,8 +214,8 @@ for k, v in UDP_sorted_list[:list_size_int]:
 #         break
 # list_size_int = count
 
-# Write final tallies to CSV file
-result = open('./export/word-list.tsv', 'w')
+# Write final tallies to TSV file
+result = open('./export/frequency-dictionary.tsv', 'w')
 result.write('LEMMA\tRANK\tDISPERSION\tFREQUENCY\tRANGE\n')
 for i in range(list_size_int):
     result.write(str(table_list[i][0]) + '\t' +
