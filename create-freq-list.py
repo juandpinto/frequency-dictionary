@@ -11,8 +11,8 @@ from collections import defaultdict
 # ----------------- INITIALIZE VARIABLES ----------------- #
 ############################################################
 
-# Define path for topmost directory to search. Make sure this points to
-# the correct location of your corpus.
+# Define path for topmost directory to search. Make sure this points
+# to the correct location of your corpus.
 corpus_path = './OpenSubtitles2018_parsed_single/parsed/he'
 
 # Initialize dictionaries
@@ -26,6 +26,7 @@ lemma_UDPs_dict = defaultdict(float)
 total_tokens_int = 0
 total_files_int = 0
 table_list = []
+row = tuple()
 
 # Set size of final list
 list_size_int = 5000
@@ -60,8 +61,8 @@ def find_and_count(doc):
 # -------------------- OPEN AND READ --------------------- #
 ############################################################
 
-# Open and read all files. If calculating only for a specific language,
-# comment out this code and uncomment the large block that follows.
+# Open and read all files. If only for a specific language, comment
+# out this code and uncomment the large block that follows.
 #
 for dirName, subdirList, fileList in os.walk(corpus_path):
     if len(fileList) > 0:
@@ -72,14 +73,14 @@ for dirName, subdirList, fileList in os.walk(corpus_path):
 ############################################################
 # ---------------- LANGUAGE-SPECIFIC BLOCK -----------------
 #
-# This large block of code is for creating a list using only movies #
-# with a specific primary language (in this case, Hebrew). Be sure to #
-# uncomment the relevant lines of code, and to comment out the block #
-# above. #
+# This large block of code is for creating a list using only #
+# movies with a specific primary language (in this case, Hebrew). #
+# Be sure to uncomment the relevant lines of code, and to comment #
+# out the block above. #
 #
 #
 # Create list of IDs for movies with Hebrew as primary language. #
-# This makes use of a text file that must already exist with this list. #
+# This uses a text file that must already exist with this list. #
 #
 # Hebrew_IDs_list = []
 # with open('./Hebrew_originals.txt', 'r', encoding='utf-8') as f:
@@ -98,7 +99,7 @@ for dirName, subdirList, fileList in os.walk(corpus_path):
 #         Hebrew_IDs_list[Hebrew_IDs_list.index(item)] = item[1:]
 #
 #
-# Open and read files for movies with Hebrew as the primary language. #
+# Open and read movies files with Hebrew as the primary language. #
 #
 # for dirName, subdirList, fileList in os.walk(corpus_path):
 #     if len(fileList) > 0:
@@ -117,7 +118,8 @@ for dirName, subdirList, fileList in os.walk(corpus_path):
 
 # Calculate total raw frequencies per lemma
 for lemma in lemma_by_file_dict:
-    lemma_totals_dict[lemma] = sum(lemma_by_file_dict[lemma].values())
+    lemma_totals_dict[lemma] = \
+        sum(lemma_by_file_dict[lemma].values())
 
 # Calculate token count per file
 for lemma in lemma_by_file_dict:
@@ -127,15 +129,16 @@ for lemma in lemma_by_file_dict:
 
 # Calculate total token count
 for file in token_count_dict:
-    total_tokens_int = total_tokens_int + token_count_dict.get(file, 0)
+    total_tokens_int = \
+        total_tokens_int + token_count_dict.get(file, 0)
 
-# Set value by which to measure normalized frequency (freq per x words)
+# Set value for normalized frequency (freq per x words)
 freq_per_int = 1000000
 
 # Calculate normalized frequencies per lemma
 for lemma in lemma_totals_dict:
-    lemma_norm_dict[lemma] = lemma_totals_dict[lemma] / total_tokens_int * \
-        freq_per_int
+    lemma_norm_dict[lemma] = \
+        lemma_totals_dict[lemma] / total_tokens_int * freq_per_int
 
 # Calculate DPs
 for lemma in lemma_by_file_dict.keys():
@@ -145,11 +148,12 @@ for lemma in lemma_by_file_dict.keys():
              total_tokens_int) -
             (lemma_by_file_dict[lemma][file] /
              lemma_totals_dict[lemma]))
-lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in lemma_DPs_dict.items()}
+lemma_DPs_dict = {lemma: DP/2 for (lemma, DP) in
+                  lemma_DPs_dict.items()}
 
 # Calculate UDPs
-lemma_UDPs_dict = {lemma: (1-DP)*lemma_norm_dict[lemma] for (lemma, DP) in
-                   lemma_DPs_dict.items()}
+lemma_UDPs_dict = {lemma: (1-DP)*lemma_norm_dict[lemma] for
+                   (lemma, DP) in lemma_DPs_dict.items()}
 
 
 ############################################################
@@ -161,48 +165,52 @@ UDP_sorted_list = [(k, lemma_UDPs_dict[k]) for k in sorted(
     lemma_UDPs_dict, key=lemma_UDPs_dict.__getitem__,
     reverse=True)]
 
-# Create list of tuples with all values (Lemma, Rank, UDP, Frequency, Range)
+# Create list of tuples with all values:
+# (Lemma, Rank, UDP, Frequency, Range)
 i = 0
 for k, v in UDP_sorted_list[:list_size_int]:
     i = i + 1
-    table_list.append((k,
-                       i,
-                       '{0:,.2f}'.format(v),
-                       '{0:,.2f}'.format(lemma_norm_dict[k]),
-                       '{0:,.2f}'.format(sum(1 for count in
-                                             lemma_by_file_dict[k].values() if
-                                             count > 0) /
-                                         total_files_int * 100)))
+    row = (k,
+           i,
+           '{0:,.2f}'.format(v),
+           '{0:,.2f}'.format(lemma_norm_dict[k]),
+           '{0:,.2f}'.format(sum(1 for count in
+                                 lemma_by_file_dict[k].values() if
+                                 count > 0) /
+                             total_files_int * 100))
+    table_list.append(row)
 
 ############################################################
 # ---------------- SORT-BY-FREQUENCY BLOCK -----------------
 #
-# Sort entries by raw frequency (total lemma count). To sort the final #
-# list by frequency instead of UDP, comment out the above code within the #
-# "SORT LIST AND CREATE TABLE" section, and also uncomment the relevant #
-# lines of code in this block. #
+# Sort entries by raw frequency (total lemma count). To sort the #
+# final list by frequency instead of dispersion, comment out the #
+# above code within the "SORT LIST AND CREATE TABLE" section, and #
+# also uncomment the relevant lines of code in this block. #
 #
 #
 # Sort entries by raw frequency #
 #
-# frequency_sorted_list = [(k, lemma_totals_dict[k]) for k in sorted(
-#     lemma_totals_dict, key=lemma_totals_dict.__getitem__,
-#     reverse=True)]
+# frequency_sorted_list = [(k, lemma_totals_dict[k]) for k in
+#                          sorted(lemma_totals_dict,
+#                          key=lemma_totals_dict.__getitem__,
+#                          reverse=True)]
 #
 #
-# Create list of tuples with all values (Lemma, Frequency, Range, UDP) #
+# Create list of tuples with all values #
 #
 # for k, v in frequency_sorted_list[:list_size_int]:
 #     table_list.append((k, v, sum(
-#         1 for count in lemma_by_file_dict[k].values() if count > 0),
-#         lemma_UDPs_dict[k]))
+#         1 for count in lemma_by_file_dict[k].values() if
+#         count > 0), lemma_UDPs_dict[k]))
 #
 # ------------- END OF SORT-BY-FREQUENCY BLOCK -------------
 ############################################################
 
-# Calculate list size for 80% coverage and set that as the list size. Note
-# that if the initial list_size_int (set near the beginning of the script)
-# provides less than the desired coverage, it will default to that instead.
+# Calculate list size for 80% coverage and set that as the list
+# size. Note that if the initial list_size_int (set near the
+# beginning of the script) provides less than the desired coverage,
+# it will default to that instead.
 #
 # added_freq_int = 0
 # count = 0

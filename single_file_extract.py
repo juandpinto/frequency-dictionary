@@ -8,7 +8,8 @@ source = '../OpenSubtitles2018_parsed'
 destination = './OpenSubtitles2018_parsed_single'
 
 # Copy the directory tree into a new location
-shutil.copytree(source, destination, ignore=shutil.ignore_patterns('*.*'))
+shutil.copytree(source, destination,
+                ignore=shutil.ignore_patterns('*.*'))
 
 # Copy the first file in each folder into the new tree
 for dirName, subdirList, fileList in os.walk(source):

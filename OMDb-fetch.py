@@ -13,7 +13,8 @@ IDs = []
 
 # Create list of all movie directory paths for desired year
 for name in glob.glob(
-        './OpenSubtitles2018_parsed_single/parsed/he/' + year + '/*/'):
+        './OpenSubtitles2018_parsed_single/parsed/he/' +
+        year + '/*/'):
     IDs.append(name)
 
 # Trim list of directories to only the movie IDs
