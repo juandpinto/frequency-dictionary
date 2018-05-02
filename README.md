@@ -1,5 +1,7 @@
 # Frequency Dictionary and Scripts
 
+[![DOI](https://zenodo.org/badge/123617466.svg)](https://zenodo.org/badge/latestdoi/123617466)
+
 This repository houses all the scripts and files used to create the *Frequency Dictionary of Spoken Hebrew* (FDOSH), along with the dictionary itself. This project was created as part of my MA thesis at the University of Texas at Austin in 2018. The thesis itself describes the creation process—and the use of each script—in depth, and can be found in the [University of Texas thesis repository](https://repositories.lib.utexas.edu/handle/2152/11). A GitHub repository for the thesis manuscript can also be found at <https://github.com/juandpinto/thesis-manuscript>.
 
 The scripts make use of OPUS's [OpenSubtitles2018](http://opus.nlpl.eu/OpenSubtitles2018.php) collection, which is a mega-corpus of cleaned, tokenized, and parsed versions of XML files originally obtained from [opensubtitles.org](http://opensubtitles.org). The final frequency dictionary consists of Hebrew lemmas, and is arranged based on a usage coefficient of Gries' (2008) deviation of proportions, or *U~DP~*. It also includes frequency and range measures for each entry.
