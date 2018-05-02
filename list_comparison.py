@@ -3,25 +3,28 @@
 
 import re
 
-lemmas_Hebrew_list = []
+lemmas_original_list = []
 lemmas_all_list = []
-diff_list = []
+shared_list = []
 
-with open('./export/HebrewWordList_HebrewOnly.csv', 'r',
+# Import all lemmas in original-language list
+with open('./export/frequency-dictionary-original-only.tsv', 'r',
           encoding='utf-8') as f:
     read_data = f.read()
-    lemmas_Hebrew_list = re.findall(r'[א-ת]+', read_data)
+    lemmas_original_list = re.findall(r'[א-ת]+', read_data)
 
-with open('./export/HebrewWordList.csv', 'r',
+# Import all lemmas in list from all subtitles
+with open('./export/frequency-dictionary.tsv', 'r',
           encoding='utf-8') as f:
     read_data = f.read()
     lemmas_all_list = re.findall(r'[א-ת]+', read_data)
 
-
-for item in lemmas_Hebrew_list:
+# Find shared lemmas
+for item in lemmas_original_list:
     if item in lemmas_all_list:
-        diff_list.append(item)
+        shared_list.append(item)
 
-for item in diff_list:
+# Print shared lemmas and total count
+for item in shared_list:
     print(item)
-print('Total shared: ' + str(len(diff_list)))
+print('Total shared: ' + str(len(shared_list)))

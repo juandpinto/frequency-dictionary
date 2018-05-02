@@ -236,8 +236,10 @@ result.close()
 # Print final tallies. Uncomment this code to see the results
 # printed instead of writing them to a file.
 #
+# print('LEMMA\tRANK\tDISPERSION\tFREQUENCY\tRANGE\n')
 # for i in range(list_size_int):
-#     print('Lemma: ' + table_list[i][0] +
-#           '\tFrequency: ' + str(table_list[i][1]) +
-#           '\tRange: ' + str(table_list[i][2]) +
-#           '\tUDP: ' + str(table_list[i][3]))
+#     print(str(table_list[i][0]) + '\t' +
+#           str(table_list[i][1]) + '\t' +
+#           str(table_list[i][2]) + '\t' +
+#           str(table_list[i][3]) + '\t' +
+#           str(table_list[i][4]) + '\n')
